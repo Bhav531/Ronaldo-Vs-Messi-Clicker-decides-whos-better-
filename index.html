@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ronaldo vs Messi Clicker</title>
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        #ronaldo, #messi {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        #ronaldo {
+            background-color: red;
+        }
+        #messi {
+            background-color: blue;
+        }
+        img {
+            max-width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: white;
+            color: black;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #ccc;
+        }
+        /* Smaller Centered Bubble */
+        #winnerBubble {
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40%; /* Smaller width */
+            padding: 20px; /* Smaller padding */
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+            font-size: 1.5rem; /* Adjusted font size */
+            font-weight: bold;
+            border-radius: 15px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+            animation: pulse 3s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Winner Bubble -->
+    <div id="winnerBubble">Let's see who's better!</div>
+
+    <div id="ronaldo">
+        <h2>Ronaldo</h2>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Cristiano_Ronaldo_2018.jpg" alt="Ronaldo">
+        <p id="ronaldoScore">Score: 0</p>
+        <button onclick="increaseScore('ronaldo')">Click Me!</button>
+    </div>
+
+    <div id="messi">
+        <h2>Messi</h2>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Leo_Messi_v_Granada_2014.jpg/240px-Leo_Messi_v_Granada_2014.jpg" alt="Messi">
+        <p id="messiScore">Score: 0</p>
+        <button onclick="increaseScore('messi')">Click Me!</button>
+    </div>
+
+    <script>
+        // Initialize scores from local storage or set to 0
+        let ronaldoScore = parseInt(localStorage.getItem('ronaldoScore')) || 0;
+        let messiScore = parseInt(localStorage.getItem('messiScore')) || 0;
+
+        // Display the scores
+        document.getElementById('ronaldoScore').innerText = `Score: ${ronaldoScore}`;
+        document.getElementById('messiScore').innerText = `Score: ${messiScore}`;
+
+        // Update the winner bubble on page load
+        updateWinnerBubble();
+
+        function increaseScore(player) {
+            if (player === 'ronaldo') {
+                ronaldoScore++;
+                localStorage.setItem('ronaldoScore', ronaldoScore);
+                document.getElementById('ronaldoScore').innerText = `Score: ${ronaldoScore}`;
+            } else if (player === 'messi') {
+                messiScore++;
+                localStorage.setItem('messiScore', messiScore);
+                document.getElementById('messiScore').innerText = `Score: ${messiScore}`;
+            }
+            updateWinnerBubble(); // Update the winner bubble after each click
+        }
+
+        function updateWinnerBubble() {
+            const bubble = document.getElementById('winnerBubble');
+            if (ronaldoScore > messiScore) {
+                bubble.innerText = "Ronaldo is winning!";
+                bubble.style.background = "rgba(255, 0, 0, 0.9)";
+                bubble.style.color = "white";
+            } else if (messiScore > ronaldoScore) {
+                bubble.innerText = "Messi is better!";
+                bubble.style.background = "rgba(0, 0, 255, 0.9)";
+                bubble.style.color = "white";
+            } else {
+                bubble.innerText = "It's a tie!";
+                bubble.style.background = "rgba(255, 255, 255, 0.9)";
+                bubble.style.color = "black";
+            }
+        }
+    </script>
+
+</body>
+</html>     
+   
